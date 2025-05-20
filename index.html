@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="imagens/logogfteam.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>GFTeam IAPC Irajá | Projeto Resgate Jiu-Jitsu</title>
+  <style>
+    body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #f8f8f8; }
+    header { background: black; color: white; padding: 20px; text-align: center; }
+    nav { background: rgb(0, 137, 92); padding: 10px 0; position: sticky; top: 0; text-align: center; z-index: 999; }
+    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+    section { padding: 40px 20px; }
+    .hero { background-image: url('imagens/fundo-hero.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat; height: 400px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2em; text-shadow: 2px 2px 4px black; }
+    .hero div { background-color: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; text-align: center; }
+    footer { background: #111; color: #ccc; text-align: center; padding: 20px; }
+    .whatsapp-float { position: fixed; bottom: 20px; right: 10px; z-index: 1000; }
+    .whatsapp-float img { width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 0px 0px rgba(0,0,0,0.3); transition: transform 0.3s; border: none; background: transparent; }
+    .whatsapp-float img:hover { transform: scale(1.1); }
+    .container { width: 90%; max-width: 1200px; margin: auto; }
+    img { max-width: 100%; height: auto; }
+    a { color: black; text-decoration: none; font-weight: normal; }
+    a:hover { font-weight: bold; color: black; }
+    @media (max-width: 768px) { .menu { flex-direction: column; } .texto { font-size: 1em; } }
+    @media (max-width: 500px) { .whatsapp-float img { width: 50px; height: 50px; } }
+    #popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 9999; }
+    .popup-conteudo { background: white; padding: 30px; border-radius: 12px; text-align: center; max-width: 400px; box-shadow: 0 0 10px rgba(0,0,0,0.3); position: relative; }
+    .popup-conteudo h3 { margin-top: 0; }
+    .fechar { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; }
+    .noticias-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .noticia-card { background: #f1f1f1; border-radius: 8px; width: 250px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.3s ease; text-align: center; }
+    .noticia-card:hover { transform: translateY(-5px); }
+    .noticia-card img { width: 100%; height: 150px; object-fit: cover; }
+    .noticia-card h3 { font-size: 1em; margin: 10px; color: #00895c; }
+    .loja-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 20px; }
+    .produto-card { background: #fff; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 220px; text-align: center; padding: 15px; }
+    .produto-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 6px; }
+    .produto-card h3 { margin: 10px 0 5px; font-size: 1em; color: #00895c; }
+    .produto-card p { font-size: 0.95em; color: #333; }
+.comprar-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 20px;
+  background: linear-gradient(to right, #25d366, #1da955);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.comprar-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to right, #1da955, #1abc9c);
+}
+    .card { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 30px; }
+
+    @media print {
+        table { 
+            page-break-inside: avoid !important;
+            border-collapse: collapse !important;
+            width: 100% !important;
+        }
+        tr { 
+            page-break-inside: avoid !important; 
+        }
+        th, td {
+            padding: 8px !important;
+            border: 1px solid #ddd !important;
+        }
+    }
+.pdf-export {
+      position: relative !important;
+      left: 0 !important;
+      visibility: visible !important;
+      width: 100% !important;
+    }
+    .pdf-export table {
+      width: 100% !important;
+      border: 2px solid #00895c !important;
+      page-break-inside: auto !important;
+    }
+    .pdf-export th {
+      background: #00895c !important;
+      color: white !important;
+      padding: 12px !important;
+    }
+    .pdf-export td {
+      padding: 8px !important;
+      border: 1px solid #ddd !important;
+    }
+</style>
+<style>  
+#aulas table,
+.pdf-export table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.85rem;
+}
+
+#aulas th, #aulas td,
+.pdf-export th, .pdf-export td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  white-space: nowrap;
+}
+
+#aulas thead th,
+.pdf-export th {
+  background-color: #00895c;
+  color: white;
+  font-weight: 600;
+  border-bottom: 2px solid #ccc;
+}
+
+/* Bordas laterais removidas */
+#aulas td:first-child,
+#aulas th:first-child,
+.pdf-export td:first-child,
+.pdf-export th:first-child {
+  border-left: none;
+}
+
+#aulas td:last-child,
+#aulas th:last-child,
+.pdf-export td:last-child,
+.pdf-export th:last-child {
+  border-right: none;
+}
+
+/* Sem borda inferior na última linha */
+#aulas tbody tr:last-child td,
+.pdf-export tbody tr:last-child td {
+  border-bottom: none;
+}
+#aulas table thead tr th:first-child,
+.pdf-export table thead tr th:first-child {
+  border-top-left-radius: 8px;
+}
+
+#aulas table thead tr th:last-child,
+.pdf-export table thead tr th:last-child {
+  border-top-right-radius: 8px;
+}
+
+/* Arredondar quinas inferiores */
+#aulas table tbody tr:last-child td:first-child,
+.pdf-export table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+#aulas table tbody tr:last-child td:last-child,
+.pdf-export table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+ #aulas table tbody tr:last-child td:first-child,
+.pdf-export table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+#aulas tbody tr:nth-child(odd) td,
+.pdf-export tbody tr:nth-child(odd) td {
+  background-color: #ffffff; /* Linhas ímpares: branco */
+}
+
+#aulas tbody tr:nth-child(even) td,
+.pdf-export tbody tr:nth-child(even) td {
+  background-color: #f9f9f9; /* Linhas pares: cinza claro */
+}
+</style>
+
+</head>
+<body>
+<a href="https://wa.me/5521969291616" class="whatsapp-float" target="_blank" title="Fale conosco no WhatsApp" rel="noopener noreferrer">
+  <img src="https://img.icons8.com/?size=100&id=DUEq8l5qTqBE&format=png&color=000000" alt="WhatsApp">
+</a>
+
+<header>
+  <img src="imagens/topo.webp" width="609" height="200" alt="Logo GFTeam IAPC de Irajá">
+  <p>Transformando vidas através do Jiu-Jitsu</p>
+</header>
+
+<nav>
+  <a href="#inicio">Início</a>
+  <a href="#eventos">Eventos</a>
+  <a href="#noticias">Notícias</a>
+  <a href="#sobre">Sobre</a>
+  <a href="#aulas">Aulas</a>
+  <a href="#galeria">Galeria</a>
+  <a href="#filiais">Filiais</a>
+  <a href="#loja">Produtos</a>
+  <a href="#contato">Contato</a>
+</nav>
+
+<section class="hero" id="inicio">
+  <div>
+    Bem-vindo à GFTeam IAPC de Irajá | Projeto Resgate Jiu-jitsu!
+  </div>
+</section>
+
+<section id="eventos">
+ <div class="card">
+    <h2>Eventos</h2>
+
+    <div class="noticia-card" style="margin:auto;">
+      <img src="imagens/copinha.webp" alt="1ª Copinha Kids e Juvenil - Projeto Resgate" style="object-fit: contain; height: 250px; background: white;">
+      <h3>1ª Copinha Kids e Juvenil - Projeto Resgate</h3>
+      <p style="padding: 0 10px;">
+        🗓️ Dia <strong>27 de julho</strong> às 9h<br>
+        📍 Rua Hannibal Porto, 730 – Irajá – RJ<br>
+        </p>
+      <a href="https://docs.google.com/forms/d/1ia6lT_VGD0NtpEDyCbh2zoEZkIR9xQc6wWcT8zzsC2s/viewform?edit_requested=true" target="_blank" class="comprar-btn">Inscreva-se</a>
+    </div>
+</section>
+
+<section id="noticias">
+    <div class="card">
+  <h2>Notícias</h2>
+  <div class="noticias-grid" id="noticias-container">
+    <!-- As notícias da planilha aparecerão aqui -->
+  </div>
+ </div>
+</section>
+
+<section id="sobre">
+<div class="card">
+  <h2>Sobre a GFTeam Irajá</h2>
+  <p><strong>Quem somos:</strong><br>
+    A <strong>GFTeam IAPC de Irajá | Projeto Resgate</strong> é uma iniciativa social localizada no bairro de Irajá, zona norte do Rio de Janeiro. Utiliza o <strong>jiu-jitsu</strong> como ferramenta de transformação social, oferecendo aulas acessíveis para pessoas de <b>todas as idades</b>. O projeto promove disciplina, respeito e inclusão. Tendo como Fundador e Diretor o <b>Mestre Luciano Cordeiro Campos (Bolão)</b></p>
+  <p><strong>Nosso impacto:</strong><br>
+    Com mais de <strong>200 alunos</strong>, o Projeto Resgate é hoje um dos maiores e mais respeitados centros de formação de atletas da região. A estrutura do projeto é voltada para o desenvolvimento técnico e pessoal, contribuindo para a formação de <strong>cidadãos conscientes e comprometidos com valores positivos</strong>.</p>
+  <p><strong>Reconhecimento:</strong><br>
+    Estamos vinculados à <strong>GFTeam (Grappling Fight Team)</strong>, uma das principais equipes de jiu-jitsu do Brasil, o que garante a qualidade técnica das aulas e reconhecimento no cenário esportivo.</p>
+  <p><strong>Quer saber mais?</strong><br>
+    Acesse nossas redes sociais e acompanhe de perto esse trabalho transformador!</p>
+</div>
+</section>
+<section id="aulas">
+  <div class="card">
+    <h2 style="text-align:center;">Quadro de Horários – Aulas Adulto</h2>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; text-align:center; font-size:0.95rem;">
+        <thead style="background-color:#00895c; color:white;">
+          <tr>
+            <th>Horário</th>
+            <th>Segunda</th>
+            <th>Terça</th>
+            <th>Quarta</th>
+            <th>Quinta</th>
+            <th>Sexta</th>
+            <th>Sábado</th>
+            <th>Domingo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>6h</td><td>Jiu-Jitsu</td><td>Jiu-Jitsu</td><td>Jiu-Jitsu</td><td>Jiu-Jitsu</td><td>Jiu-Jitsu</td><td style="background:#e0ffe0">LIVRE</td><td style="background:#e0ffe0">LIVRE</td></tr>
+          <tr><td>8h</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+          <td>Jiu-Jitsu</td><td style="background:#e0ffe0">LIVRE</td></tr>
+          <tr><td>9h</td><td>Jiu-Jitsu Feminino</td><td>-</td><td>Jiu-Jitsu Feminino</td><td>-</td><td>-</td><td style="background:#e0ffe0">LIVRE</td><td style="background:#e0ffe0">LIVRE</td></tr>
+          <tr><td>14h</td><td><p>Jiu-Jitsu p/</p>
+            <p> Competição</p></td><td><p>Jiu-Jitsu p/</p>
+            <p> Competição</p></td><td><p>Jiu-Jitsu p/ </p>
+          <p>Competição</p></td><td><p>Jiu-Jitsu p/</p>
+          <p> Competição</p></td><td><p>Jiu-Jitsu p/</p>
+          <p> Competição</p></td><td style="background:#e0ffe0">LIVRE</td><td style="background:#e0ffe0">LIVRE</td></tr>
+          <tr><td>19h</td><td>-</td><td>Treino Funcional</td><td>-</td><td>Treino Funcional</td><td>Jiu-Jitsu Feminino</td><td style="background:#e0ffe0">LIVRE</td><td style="background:#e0ffe0">LIVRE</td></tr>
+          <tr><td>20h</td><td>Jiu-Jitsu</td><td>Jiu-Jitsu</td><td>Jiu-Jitsu</td><td>No Gi</td><td>-</td><td style="background:#e0ffe0">LIVRE</td><td style="background:#e0ffe0">LIVRE</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <h2 style="text-align:center;">Quadro de Horários – Kids / Juvenil</h2>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; text-align:center; font-size:0.95rem;">
+        <thead style="background-color:#00895c; color:white;">
+          <tr>
+            <th>Horário</th>
+            <th>Segunda</th>
+            <th>Terça</th>
+            <th>Quarta</th>
+            <th>Quinta</th>
+            <th>Sexta</th>
+            <th>Sábado</th>
+            <th>Domingo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>17h30</td><td>-</td><td>Jiu-Jitsu Kids</td><td>Jiu-Jitsu Kids</td><td>Jiu-Jitsu Kids</td><td>-</td><td style="background:#e0ffe0">LIVRE</td><td style="background:#e0ffe0">LIVRE</td></tr>
+          <tr><td>18h30</td><td>-</td><td>Jiu-Jitsu Juvenil</td><td>Jiu-Jitsu Juvenil</td><td>Jiu-Jitsu Juvenil</td><td>-</td><td style="background:#e0ffe0">LIVRE</td><td style="background:#e0ffe0">LIVRE</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+    <!-- Botões de exportação -->
+    <div style="text-align: center; margin-top: 15px;">
+      <button onclick="baixarPDF()" class="comprar-btn">📄 Baixar Tabelas em PDF</button>
+      <button onclick="exportarCSV()" class="comprar-btn" style="margin-left: 10px;">📊 Exportar para Excel</button>
+      </div>
+</div>
+</section>
+
+<<section id="galeria">
+  <div class="card">
+    <h2>Galeria</h2>
+    <ul>
+      Fotos em Breve!
+    </ul>
+  </div>
+</section>
+
+<section id="filiais">
+  <div class="card">
+    <h2 style="text-align:left; color:black;">Nossos Polos</h2>
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+      <div style="flex: 1 1 250px; background: #f1f1f1; border-radius: 10px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin: 0 0 10px; color:#00895c;">🏠 Jardim América</h3>
+        <p><strong>🥋 Professor Responsável:</strong> Thiago Dubal<br>
+        <strong>📌 Endereço:</strong> Rua Organista Antônio Silva 103 - Jardim América - RJ</p>
+      </div>
+      <div style="flex: 1 1 250px; background: #f1f1f1; border-radius: 10px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin: 0 0 10px; color:#00895c;">🏠 Chapadão - Morro da Criança</h3>
+        <p><strong>🥋 Professor Responsável:</strong> Celso Scania<br>
+        <strong>📌 Endereço:</strong></p>
+        <ul style="padding-left: 20px; margin: 0;">
+          <li>CT 1 - Igreja Wesleyana</li>
+          <li>CT 2 - R. Das Pedrinhas</li>
+        </ul>
+      </div>
+      <div style="flex: 1 1 250px; background: #f1f1f1; border-radius: 10px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin: 0 0 10px; color:#00895c;">🏠 Parque Irajá</h3>
+        <p><strong>🥋 Professor Responsável:</strong> Rian Barbosa<br>
+        <strong>📌 Endereço:</strong> Rua Hannibal Porto Nº 730 - Irajá - RJ</p>
+      </div>
+      <div style="flex: 1 1 250px; background: #f1f1f1; border-radius: 10px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin: 0 0 10px; color:#00895c;">🏠 Vicente de Carvalho</h3>
+        <p><strong>🥋 Professor Responsável:</strong> Samuel Cartaxo<br>
+        <strong>📌 Endereço:</strong> Av. Vicente de Carvalho 880 (Frente ao shopping Carioca) - Vicente de Carvalho - RJ</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="loja">
+<div class="card">
+  <h2>Nossa Loja</h2>
+  <div class="loja-grid" id="loja-container">
+    <!-- Produtos da planilha aparecerão aqui -->
+  </div>
+</div>
+</section>
+
+<section id="contato">
+  <div class="card">
+      <h2>Contato</h2>
+      <div class="grid">
+        <div>
+          <p>📌 Endereço: <a href="https://maps.app.goo.gl/jeLcgMeyAeurgmpZ8" target="_blank">Rua Emiliano Felipe, 163 - Irajá</a></p>
+          <p>📧 Email: <a href="mailto:gfteam.iapcdeiraja@gmail.com">gfteam.iapcdeiraja@gmail.com</a></p>
+        </div>
+        <div>
+          <p>📱 Instagram: <a href="https://instagram.com/gfteam.iapcdeiraja" target="_blank">@gfteam.iapcdeiraja</a></p>
+          <p>🎥 YouTube: <a href="https://youtube.com/@GFTeamIAPCdeIrajá" target="_blank">@GFTeamIAPCdeIrajá</a></p>
+        </div>
+      </div>
+    </section>
+<footer>
+<p>&copy; 2025 GFTeam IAPC de Irajá - Todos os direitos reservados</p> 
+<a href='https://www.free-counters.org/'>free Counters on Free-Counters.org</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=10e51c8905b7997feda4125b6fbd687115b8057a'></script>
+<script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1336988/t/5"></script>
+  </footer>
+
+<script>
+  function fecharPopup() {
+    document.getElementById("popup").style.display = "none";
+  }
+
+window.onload = function() {
+  if (!localStorage.getItem('popup_exibido')) {
+    setTimeout(function() {
+      document.getElementById("popup").style.display = "flex";
+      localStorage.setItem('popup_exibido', 'sim');
+    }, 1000);
+  }
+};
+</script>
+
+<script>
+  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_uKELCsuiNSiZPu6SZ4UqWLytQU6BsGqsaYvq4hnAl7qjeirjqUoDRe7gBfPVXMUKzg3UIuOhvQKg/pub?gid=0&single=true&output=csv';
+
+  fetch(csvUrl)
+    .then(res => res.text())
+    .then(data => {
+      const linhas = data.trim().split('\n').slice(1);
+      const container = document.getElementById("noticias-container");
+
+      linhas.forEach(linha => {
+        const [titulo, dataPub, conteudo, imagemURL, link] = linha.split(',');
+
+        if (titulo && conteudo && imagemURL) {
+          container.innerHTML += `
+            <div class="noticia-card">
+              <img src="${imagemURL.trim()}" alt="${titulo}">
+              <h3>${titulo}</h3>
+              <p style="padding: 0 10px;">${conteudo}</p>
+              ${link ? `<p><a href="${link}" target="_blank" style="color:#00895c;font-weight:bold;">Leia mais</a></p>` : ''}
+            </div>
+          `;
+        }
+      });
+    });
+</script>
+<script>
+  const lojaCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRihw9l86RRd17CF70el4L75-TI-xEDCF0DhHNtzk5-ZpooNCRdZOzQYiOXT5JKVMNCopSLgmgoiZl-/pub?gid=0&single=true&output=csv';
+
+  fetch(lojaCsvUrl)
+    .then(response => response.text())
+    .then(data => {
+      const linhas = data.trim().split('\n').slice(1); // ignora o cabeçalho
+      const lojaContainer = document.getElementById('loja-container');
+
+      linhas.forEach(linha => {
+        const [nome, preco, descricao, imagemURL, linkCompra] = linha.split(',');
+
+        if (nome && imagemURL && preco) {
+          lojaContainer.innerHTML += `
+            <div class="produto-card">
+              <img src="${imagemURL.trim()}" alt="${nome}">
+              <h3>${nome}</h3>
+              <p>${descricao}</p>
+              <p><strong>${preco}</strong></p>
+              <a href="${linkCompra}" target="_blank" class="comprar-btn">Comprar</a>
+            </div>
+          `;
+        }
+      });
+    });
+</script>
+<div id="popup">
+  <div class="popup-conteudo">
+    <span class="fechar" onclick="fecharPopup()">&times;</span>
+    <h3>📣 Evento Especial!</h3>
+    <p><img src="imagens/copinha.webp" alt="1ª COPINHA KIDS E JUVENIL PROJETO RESGATE"></p>
+        <p>Garanta sua vaga agora!</p>
+    <a href="https://docs.google.com/forms/d/1ia6lT_VGD0NtpEDyCbh2zoEZkIR9xQc6wWcT8zzsC2s/viewform?edit_requested=true" target="_blank" class="comprar-btn">Inscreva-se</a>
+  </div>
+</div>
+  </script>
+<!-- Scripts para exportação -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+function baixarPDF() {
+  const element = document.getElementById('aulas');
+
+  // Configuração
+  const opt = {
+    margin: [0, 0, 0, 0], // [top, left, bottom, right]
+    filename: 'horarios_gfteam_iraja.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 3,
+      useCORS: true,
+      allowTaint: true,
+      scrollY: 0
+    },
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+  };
+
+  // Força o redimensionamento da área para capturar corretamente
+  element.style.maxWidth = "1200px";
+  element.style.background = "white";
+  element.style.color = "black";
+
+  // Esconde os botões antes de salvar o PDF
+  const botoes = element.querySelectorAll('button');
+  botoes.forEach(btn => btn.style.display = 'none');
+
+  html2pdf().set(opt).from(element).save().then(() => {
+    botoes.forEach(btn => btn.style.display = ''); // mostra de volta os botões
+  }).catch(err => {
+    console.error('Erro ao gerar PDF:', err);
+    alert('Erro ao gerar PDF! Veja o console.');
+  });
+}
+</script>
+<script>
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'horarios_gfteam.csv';
+    link.click();
+  }
+</script>
+</body>
+</html>
